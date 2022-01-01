@@ -33,7 +33,18 @@ public class SimpleJobConfiguration {
 		return stepBuilderFactory.get("simpleStep1")
 				.tasklet(((contribution, chunkContext) -> {
 					log.info(">>>>>>>>>> step 1");
-					log.info(">>>>>>>>>>> request Date = {}", requestDate);
+					throw new IllegalArgumentException("Step1에서 실패");
+				}))
+				.build();
+	}
+
+	@Bean
+	@JobScope
+	public Step simpleStep2(@Value("#{jobParameters[requestDate]}") String requestDate){
+		return stepBuilderFactory.get("simpleStep2")
+				.tasklet(((contribution, chunkContext) -> {
+					log.info(">>>>>>>>>> step 2");
+					log.info(">>>>>>>>>> requestDate = {}", requestDate);
 					return RepeatStatus.FINISHED;
 				}))
 				.build();
