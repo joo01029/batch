@@ -20,21 +20,21 @@ public class TutorialConfig {
 	private final JobBuilderFactory jobBuilderFactory;
 	private final StepBuilderFactory stepBuilderFactory;
 
-//	@Bean
-//	@Qualifier("tutorialJob")
-//	public Job tutorialJob(){
-//		return jobBuilderFactory.get("tutorialJob")
-//				.start(tutorialStep())
-//				.build();
-//	}
-//
-//	@Bean
-//	public Step tutorialStep(){
-//		return stepBuilderFactory.get("tutorialStep")
-//				.tasklet(new TutorialTasklet())
-//				.build();
-//	}
-//
+	@Bean
+	@Qualifier("tutorialJob")
+	public Job tutorialJob(){
+		return jobBuilderFactory.get("tutorialJob")
+				.start(tutorialStep())
+				.build();
+	}
+
+	@Bean
+	public Step tutorialStep(){
+		return stepBuilderFactory.get("tutorialStep")
+				.tasklet(new TutorialTasklet())
+				.build();
+	}
+
 
 	@Bean
 	@Qualifier("multiJob")

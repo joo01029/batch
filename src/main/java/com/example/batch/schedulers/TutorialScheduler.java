@@ -13,17 +13,34 @@ import java.time.LocalDateTime;
 @Component
 @RequiredArgsConstructor
 public class TutorialScheduler {
-	private final Job job;
+	private final Job multiJob;
+	private final Job tutorialJob;
 	private final JobLauncher jobLauncher;
 
-	@Scheduled(fixedDelay = 5*1000L)
+	@Scheduled(fixedDelay = 50*1000L)
 	public void executeJob(){
 		try{
 			JobParameters parameter = new JobParametersBuilder()
 					.addString("datetime", LocalDateTime.now().toString())
 					.toJobParameters();
 			jobLauncher.run(
-					job,
+					multiJob,
+					parameter
+			);
+		}catch (JobExecutionException e){
+			log.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	@Scheduled(fixedDelay = 5*1000L)
+	public void executeJob2(){
+		try{
+			JobParameters parameter = new JobParametersBuilder()
+					.addString("datetime", LocalDateTime.now().toString())
+					.toJobParameters();
+			jobLauncher.run(
+					tutorialJob,
 					parameter
 			);
 		}catch (JobExecutionException e){
